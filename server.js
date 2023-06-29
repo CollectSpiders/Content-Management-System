@@ -16,7 +16,6 @@ const db = mysql.createConnection(
     host: '127.0.0.1',
     // MySQL username,
     user: 'root',
-    password: "",
     password: process.env.PASSWORD,
     database: 'movies_db'
   },
@@ -48,7 +47,7 @@ app.get('/api/movies', (req, res) => {
   db.query(sql, (err, rows) => {
     if (err) {
       res.status(500).json({ error: err.message });
-       return;
+      return;
     }
     res.json({
       message: 'success',
