@@ -169,3 +169,17 @@ const createDepartment = async (departmentName) => {
         console.error('Error connecting to the database: ', err);
     }
 };
+
+
+const deleteObject = async (objectType, objectId) => {
+    try{
+        const connection = await mysql.createPool(dbConfig).getConnection();
+        try{
+            await connection.beginTransaction();
+            await connection.query('DELETE FROM ?? WHERE id = ?', [object + 's', objectID]);
+            await connection.commit();
+        } catch (err){
+            console.error('Error deleteing ' + objectType + objectId + ': ' + ', ' + err);
+        }
+    }
+}
