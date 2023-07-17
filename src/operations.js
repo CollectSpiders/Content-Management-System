@@ -61,3 +61,49 @@ const getRoles = async () =>{
         console.error('Error connection to the database: ',err);
     }
 };
+
+const getManagers = async () => {
+    try {
+        // Establishing a connection to the database
+        const connection = await mysql.createConnection(dbConfig);
+        // Retrieving a list of managers from the 'employees' table
+        try {
+            const [rows] = await connection.query(`
+            SELECT id, CONCAT(first_name, ' ', last_name) AS name
+            FROM employees
+            WHERE manager_id IS NULL
+          `); 
+          // Mapping the retrieved data to an array of objects with 'name' and 'value' properties
+            return rows.map(row => ({ name: row.name, value: row.id }));
+        } catch (err) {
+            console.error('Error fetching managers: ', err); 
+        } finally {
+            // Closing the database connection in the 'finally' block to ensure it always happens, even if an error occurred
+            await connection.end();
+        }
+    } catch (err) {
+        console.error('Error connecting to the database: ', err);
+    }
+}
+
+
+const getDepartments = async () => {
+    try {
+        // Establishing a connection to the database
+        const connection = await mysql.createConnection(dbConfig); 
+
+        try {
+            // Retrieving all departments from the 'departments' table
+            const [rows] = await connection.query('SELECT * FROM departments');
+            // Mapping the retrieved data to an array of objects with 'name' and 'value' properties
+            return rows.map(row => ({ name: row.name, value: row.id })); 
+        } catch (err) {
+            console.error('Error fetching departments: ', err); 
+        } finally {
+            // Closing the database connection in the 'finally' block to ensure it always happens, even if an error occurred
+            await connection.end();
+        }
+    } catch (err) {
+        console.error('Error connecting to the database: ', err);
+    }
+};
