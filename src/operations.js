@@ -198,10 +198,12 @@ const deleteObject = async (objectType, objectId) => {
     }
 };
 
-const updateEmployeeRole = async (employeeId, roleId) =>{
-    try{
+const updateEmployeeRole = async (employeeId, roleId) => {
+    try {
+        // Establishing a connection to the database
         const connection = await mysql.createConnection(dbConfig);
         try {
+            // Updating the 'role_id' field of an employee in the 'employees' table with the provided employee ID and role ID
             await connection.query(
                 'UPDATE employees SET role_id = ? WHERE id = ?',
                 [roleId, employeeId]
@@ -209,30 +211,36 @@ const updateEmployeeRole = async (employeeId, roleId) =>{
         } catch (err) {
             console.error('Error updating employee role: ', err);
         } finally {
+            // Closing the database connection in the 'finally' block to ensure it always happens, even if an error occurred
             await connection.end();
         }
-    } catch (err){
+    } catch (err) {
         console.error('Error connecting to the database: ', err);
     }
 };
 
-const updateEmployeeManager = async (employeeId, managerId) =>{
-    try{
+
+const updateEmployeeManager = async (employeeId, managerId) => {
+    try {
+        // Establishing a connection to the database
         const connection = await mysql.createConnection(dbConfig);
-        try{
+        try {
+            // Updating the 'manager_id' field of an employee in the 'employees' table with the provided employee ID and manager ID
             await connection.query(
-                'UPDATE employees SET manager_id =? WHERE id =?',
+                'UPDATE employees SET manager_id = ? WHERE id = ?',
                 [managerId, employeeId]
             );
         } catch (err) {
             console.error('Error updating employee manager: ', err);
-        } finally{
+        } finally {
+            // Closing the database connection in the 'finally' block to ensure it always happens, even if an error occurred
             await connection.end();
         }
-    } catch (err){
+    } catch (err) {
         console.error('Error connecting to the database: ', err);
     }
-}; 
+};
+
 
 module.exports = {
     getEmployees,
@@ -244,5 +252,5 @@ module.exports = {
     createDepartment,
     deleteObject,
     updateEmployeeRole,
-    updateEmployeeManager,
+    updateEmployeeManager
 }
