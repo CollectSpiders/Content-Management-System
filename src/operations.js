@@ -107,3 +107,22 @@ const getDepartments = async () => {
         console.error('Error connecting to the database: ', err);
     }
 };
+
+const createDepartment = async (departmentName) => {
+    try {
+        // Establishing a connection to the database
+        const connection = await mysql.createConnection(dbConfig);
+
+        try {
+            // Inserting a new department into the 'departments' table with the provided department name
+            await connection.query('INSERT INTO departments SET ?', { name: departmentName });
+        } catch (err) {
+            console.error('Error creating department: ', err);
+        } finally {
+            // Closing the database connection in the 'finally' block to ensure it always happens, even if an error occurred
+            await connection.end();
+        }
+    } catch (err) {
+        console.error('Error connecting to the database: ', err);
+    }
+};
