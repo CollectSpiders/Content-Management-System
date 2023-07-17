@@ -123,3 +123,10 @@ const deleteObjectPrompt = async () =>{
         }
 ])};
 
+module.exports = {
+    mainPrompt,
+    addEmployeePrompt,
+    addRolePrompt,
+    addDepartmentPrompt,
+    deleteObjectPrompt
+};
