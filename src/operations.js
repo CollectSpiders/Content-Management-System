@@ -172,14 +172,29 @@ const createDepartment = async (departmentName) => {
 
 
 const deleteObject = async (objectType, objectId) => {
-    try{
+    try {
+        // Establishing a connection to the database using a connection pool
         const connection = await mysql.createPool(dbConfig).getConnection();
-        try{
+        try {
+            // Starting a transaction
             await connection.beginTransaction();
-            await connection.query('DELETE FROM ?? WHERE id = ?', [object + 's', objectID]);
+            // Deleting an object from the specified table based on its ID
+            await connection.query('DELETE FROM ?? WHERE id = ?', [objectType + 's', objectId]);
+            // Committing the transaction, making the changes permanent
             await connection.commit();
-        } catch (err){
-            console.error('Error deleteing ' + objectType + objectId + ': ' + ', ' + err);
+        } catch (err) {
+            // Handling an error that occurred while deleting the object
+            console.error(`Error deleting ${objectType} with id ${objectId}:`, err); 
+            // Rolling back the transaction to undo any changes made within the transaction
+            await connection.rollback();
+            // Rethrowing the error to propagate it to the caller
+            throw err;
+        } finally {
+            // Releasing the connection back to the connection pool
+            connection.release();
         }
+    } catch (err) {
+        console.error('Error connecting to the database: ', err);
     }
-}
+};
+
