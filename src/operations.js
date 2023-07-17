@@ -198,6 +198,24 @@ const deleteObject = async (objectType, objectId) => {
     }
 };
 
+const updateEmployeeRole = async (employeeId, roleId) =>{
+    try{
+        const connection = await mysql.createConnection(dbConfig);
+        try {
+            await connection.query(
+                'UPDATE employees SET role_id = ? WHERE id = ?',
+                [roleId, employeeId]
+            );
+        } catch (err) {
+            console.error('Error updating employee role: ', err);
+        } finally {
+            await connection.end();
+        }
+    } catch (err){
+        console.error('Error connecting to the database: ', err);
+    }
+};
+
 module.exports = {
     getEmployees,
     getRoles,
@@ -206,5 +224,6 @@ module.exports = {
     createEmployee,
     createRole,
     createDepartment,
-    deleteObject
+    deleteObject,
+    updateEmployeeRole,
 }
