@@ -198,3 +198,13 @@ const deleteObject = async (objectType, objectId) => {
     }
 };
 
+module.exports = {
+    getEmployees,
+    getRoles,
+    getManagers,
+    getDepartments,
+    createEmployee,
+    createRole,
+    createDepartment,
+    deleteObject
+}
