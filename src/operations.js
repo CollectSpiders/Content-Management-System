@@ -216,6 +216,24 @@ const updateEmployeeRole = async (employeeId, roleId) =>{
     }
 };
 
+const updateEmployeeManager = async (employeeId, managerId) =>{
+    try{
+        const connection = await mysql.createConnection(dbConfig);
+        try{
+            await connection.query(
+                'UPDATE employees SET manager_id =? WHERE id =?',
+                [managerId, employeeId]
+            );
+        } catch (err) {
+            console.error('Error updating employee manager: ', err);
+        } finally{
+            await connection.end();
+        }
+    } catch (err){
+        console.error('Error connecting to the database: ', err);
+    }
+}; 
+
 module.exports = {
     getEmployees,
     getRoles,
@@ -226,4 +244,5 @@ module.exports = {
     createDepartment,
     deleteObject,
     updateEmployeeRole,
+    updateEmployeeManager,
 }
