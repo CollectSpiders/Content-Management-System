@@ -121,4 +121,5 @@ const deleteObjectPrompt = async () =>{
             choices: departmentChoices,
             when: (answers) => answers.entityType === 'department'
         }
-}
+])};
+
