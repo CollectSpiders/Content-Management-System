@@ -108,6 +108,26 @@ const getDepartments = async () => {
     }
 };
 
+const createEmployee = async (employeeFirstName, employeeLastName, employeeRole, employeeManager) => {
+    try{
+        const connection = await mysql.createConnection(dbConfig);
+        try{
+            await connection.query('INSERT INTO employees SET ?', {
+                first_name: employeeFirstName,
+                last_name: employeeLastName,
+                role_id: employeeRole,
+                manager_id: employeeManager,
+            });
+        } catch (err){
+            console.error('Error creating employee: ', err);
+        } finally {
+            await connection.end();
+        }
+    } catch (err){
+        console.error('Error connecting to the database: ', err);
+    }
+}
+
 const createDepartment = async (departmentName) => {
     try {
         // Establishing a connection to the database
