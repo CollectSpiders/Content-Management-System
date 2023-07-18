@@ -63,3 +63,18 @@ const updateEmployeeManagerAction = async () =>{
     console.log(`/n Successfully updated employee manager \n`)
 };
 
+const deleteObjectAction = async () =>{
+    const { objectType, departmentToDelete, roleToDelet, employeeToDelete } = await deleteObjectPrompt();
+    await deleteObject(objectType || employeeToDelete || roleToDelet || departmentToDelete);
+    console.log(`\n Successfully deleted ${objectType}`);
+};
+
+module.export = {
+    viewAllEmployees,
+    viewAllRoles,
+    viewAllDepartments,
+    addEmployee,
+    updateEmployeeRoleAction,
+    updateEmployeeManagerAction,
+    deleteObjectAction
+};
