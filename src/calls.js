@@ -35,7 +35,7 @@ const viewAllDepartments = async () =>{
     console.table(departments);
 };
 
-const add Employee = async () =>{
+const addEmployee = async () =>{
     const {
         employeeFirtName,
         employeeLastName,
