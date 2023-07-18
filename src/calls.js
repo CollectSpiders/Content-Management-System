@@ -99,9 +99,9 @@ module.exports = {
     viewAllRoles,
     viewAllDepartments,
     addEmployee,
+    addRole,
+    addDepartment,
     updateEmployeeRoleAction,
     updateEmployeeManagerAction,
-    deleteObjectAction,
-    addDepartment,
-    addRole
+    deleteObjectAction
 };
