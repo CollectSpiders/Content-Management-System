@@ -57,7 +57,7 @@ const updateEmployeeRoleAction = async () =>{
     console.log(`\n Successfully updated employee role \n`)
 };
 
-const update EmployeeManagerAction = async () =>{
+const updateEmployeeManagerAction = async () =>{
     const { employeeToUpdate, newManager } = await updateEmployeeManagerPrompt();
     await updateEmployeeManager(employeeToUpdate, newManager);
     console.log(`/n Successfully updated employee manager \n`)
