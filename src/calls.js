@@ -1,3 +1,4 @@
+// Importing prompt functions
 const {
     addEmployeePrompt,
     addRolePrompt,
@@ -7,6 +8,7 @@ const {
     updateEmployeeManagerPrompt
 } = require('./prompt');
 
+// Importing database operations
 const {
     getEmployees,
     getRoles,
@@ -20,61 +22,86 @@ const {
     updateEmployeeManager
 } = require('./operations');
 
-const viewAllEmployees = async () =>{
+// View all employees
+const viewAllEmployees = async () => {
     const employees = await getEmployees();
     console.table(employees);
 };
 
-const viewAllRoles = async () =>{
+// View all roles
+const viewAllRoles = async () => {
     const roles = await getRoles();
     console.table(roles);
 };
 
-const viewAllDepartments = async () =>{
-    const departmens = await getDepartments();
+// View all departments
+const viewAllDepartments = async () => {
+    const departments = await getDepartments();
     console.table(departments);
 };
 
-const addEmployee = async () =>{
+// Add an employee
+const addEmployee = async () => {
     const {
-        employeeFirtName,
+        employeeFirstName,
         employeeLastName,
         employeeRole,
         employeeManager
     } = await addEmployeePrompt();
+
     await createEmployee(
-        employeeFirtName,
+        employeeFirstName,
         employeeLastName,
         employeeRole,
         employeeManager
     );
-    console.log(`\n ${employeeFirtName} ${employeeLastName} has been added to the database`);
+
+    console.log(`\n ${employeeFirstName} ${employeeLastName} has been added to the database`);
 };
 
-const updateEmployeeRoleAction = async () =>{
-    const { employeeToUpdate, newRole } = await updatedEmployeeRolePrompt();
-    await updateEmployeeRolePrompt(employeeToUpdate, newRole);
-    console.log(`\n Successfully updated employee role \n`)
+// Add a role
+const addRole = async () =>{
+    const { roleName } = await addRolePrompt();
+    await createRole(roleName);
+    console.log(`\n Successfully created ${roleName} to the database \n`);
 };
 
-const updateEmployeeManagerAction = async () =>{
+// Add a department
+const addDepartment = async () =>{
+    const { departmentName } = await addDepartmentPrompt();
+    await createDepartment(departmentName);
+    console.log(`\n Successfully created ${departmentName} to the database \n`);
+};
+
+// Update an employee's role
+const updateEmployeeRoleAction = async () => {
+    const { employeeToUpdate, newRole } = await updateEmployeeRolePrompt();
+    await updateEmployeeRole(employeeToUpdate, newRole);
+    console.log(`\n Successfully updated employee role \n`);
+};
+
+// Update an employee's manager
+const updateEmployeeManagerAction = async () => {
     const { employeeToUpdate, newManager } = await updateEmployeeManagerPrompt();
     await updateEmployeeManager(employeeToUpdate, newManager);
-    console.log(`/n Successfully updated employee manager \n`)
+    console.log(`\n Successfully updated employee manager \n`);
 };
 
-const deleteObjectAction = async () =>{
-    const { objectType, departmentToDelete, roleToDelet, employeeToDelete } = await deleteObjectPrompt();
-    await deleteObject(objectType || employeeToDelete || roleToDelet || departmentToDelete);
+// Delete an object (employee, role, department)
+const deleteObjectAction = async () => {
+    const { objectType, departmentToDelete, roleToDelete, employeeToDelete } = await deleteObjectPrompt();
+    await deleteObject(objectType || employeeToDelete || roleToDelete || departmentToDelete);
     console.log(`\n Successfully deleted ${objectType}`);
 };
 
-module.export = {
+module.exports = {
     viewAllEmployees,
     viewAllRoles,
     viewAllDepartments,
     addEmployee,
     updateEmployeeRoleAction,
     updateEmployeeManagerAction,
-    deleteObjectAction
+    deleteObjectAction,
+    addDepartment,
+    addRole
 };
