@@ -132,6 +132,31 @@ const updateEmployeeRolePrompt = async () =>{
             name: 'employeeToUpdate',
             message: 'Which employee would you like to update?',
             choices: employeeChoices
+        },
+        {
+            type: 'list',
+            name: 'newRole',
+            message: 'Which role would you like to assign to this employee?',
+            choices: roleChoices
+        }
+    ]);
+};
+
+const updateEmployeeManagerPrompt = async () =>{
+    const employeeChoices = (await getEmployees()).map(employee => ({ name: employee.first_name + ' ' + employee.last_name, value: employee.id }));
+    const managerChoices = await getManagers();
+    return inquirer.prompt([
+        {
+            type: 'list',
+            name: 'employeeToUpdate',
+            message: 'Which employee would you like to update?',
+            choices: employeeChoices
+        },
+        {
+            type: 'list',
+            name: 'newManager',
+            message: 'Which manager would you like to assign to this employee?',
+            choices: [...managerChoices, { name: 'None', value: null }]
         }
     ]);
 };
@@ -141,5 +166,7 @@ module.exports = {
     addEmployeePrompt,
     addRolePrompt,
     addDepartmentPrompt,
-    deleteObjectPrompt
+    deleteObjectPrompt,
+    updateEmployeeRolePrompt,
+    updateEmployeeManagerPrompt
 };
