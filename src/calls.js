@@ -50,3 +50,16 @@ const addEmployee = async () =>{
     );
     console.log(`\n ${employeeFirtName} ${employeeLastName} has been added to the database`);
 };
+
+const updateEmployeeRoleAction = async () =>{
+    const { employeeToUpdate, newRole } = await updatedEmployeeRolePrompt();
+    await updateEmployeeRolePrompt(employeeToUpdate, newRole);
+    console.log(`\n Successfully updated employee role \n`)
+};
+
+const update EmployeeManagerAction = async () =>{
+    const { employeeToUpdate, newManager } = await updateEmployeeManagerPrompt();
+    await updateEmployeeManager(employeeToUpdate, newManager);
+    console.log(`/n Successfully updated employee manager \n`)
+};
+
