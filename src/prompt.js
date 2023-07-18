@@ -123,6 +123,19 @@ const deleteObjectPrompt = async () =>{
         }
 ])};
 
+const updateEmployeeRolePrompt = async () =>{
+    const employeeChoices = (await getEmployees()).map(employee => ({ name: employee.first_name + ' ' + employee.last_name, value: employee.id }));
+    const roleChoices = await getRoles();
+    return inquirer.prompt([
+        {
+            type: 'list',
+            name: 'employeeToUpdate',
+            message: 'Which employee would you like to update?',
+            choices: employeeChoices
+        }
+    ]);
+};
+
 module.exports = {
     mainPrompt,
     addEmployeePrompt,
