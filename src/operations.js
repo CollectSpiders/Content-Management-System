@@ -20,13 +20,12 @@ const getEmployees = async () => {
         INNER JOIN roles r ON e.role_id = r.id
         INNER JOIN departments d ON r.department_id = d.id
         ORDER BY e.id`;
-      ;
         // execute query & retrieve rows
         const [rows] = await connection.query(query);
         // return the retrieved rows
         return rows;
     } catch (err) {
-        console.error('Error fetching employees:', err);
+        console.error("Error fetching employees:", err);
     } finally {
         // closes connection to database
         await connection.end();
@@ -34,9 +33,10 @@ const getEmployees = async () => {
     try {
         // code to handle database connection errors
     } catch (err) {
-        console.error('Error connecting to the database:', err);
+        console.error("Error connecting to the database:", err);
     }
-}
+};
+
 
 // retrieves roles from database 
 const getRoles = async () =>{
@@ -53,7 +53,7 @@ const getRoles = async () =>{
             // Execute the query and retrieve results
             const [rows] = await connection.query(query);
             // transform the rows into an array of objects with desired properties
-            return rows.map(row => ({name: row:DataTransferItemList, value: row.id, department: row.department, salary: row.salary}));
+            return rows.map(row => ({name: row.name, value: row.id, department: row.department, salary: row.salary}));
         } catch (err) {
             console.error('Error fetching roles: ',err);
         } finally {
