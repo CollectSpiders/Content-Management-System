@@ -1,26 +1,8 @@
 // Importing prompt functions
-const {
-    addEmployeePrompt,
-    addRolePrompt,
-    addDepartmentPrompt,
-    deleteObjectPrompt,
-    updateEmployeeRolePrompt,
-    updateEmployeeManagerPrompt
-} = require('./prompt');
+const { addEmployeePrompt, addRolePrompt, addDepartmentPrompt, deleteObjectPrompt, updateEmployeeRolePrompt, updateEmployeeManagerPrompt } = require("./prompt");
 
 // Importing database operations
-const {
-    getEmployees,
-    getRoles,
-    getManagers,
-    getDepartments,
-    createEmployee,
-    createRole,
-    createDepartment,
-    deleteObject,
-    updateEmployeeRole,
-    updateEmployeeManager
-} = require('./operations');
+const { getEmployees, getRoles, getManagers, getDepartments, createEmployee, createRole, createDepartment, deleteObject, updateEmployeeRole, updateEmployeeManager } = require("./operations");
 
 // View all employees
 const viewAllEmployees = async () => {
@@ -35,7 +17,7 @@ const viewAllRoles = async () => {
 };
 
 // View all Managers
-const viewAllManagers = async () =>{
+const viewAllManagers = async () => {
     const managers = await getManagers();
     console.table(managers);
 };
@@ -48,32 +30,22 @@ const viewAllDepartments = async () => {
 
 // Add an employee
 const addEmployee = async () => {
-    const {
-        employeeFirstName,
-        employeeLastName,
-        employeeRole,
-        employeeManager
-    } = await addEmployeePrompt();
+    const { employeeFirstName, employeeLastName, employeeRole, employeeManager } = await addEmployeePrompt();
 
-    await createEmployee(
-        employeeFirstName,
-        employeeLastName,
-        employeeRole,
-        employeeManager
-    );
+    await createEmployee(employeeFirstName, employeeLastName, employeeRole, employeeManager);
 
     console.log(`\n ${employeeFirstName} ${employeeLastName} has been added to the database`);
 };
 
 // Add a role
-const addRole = async () =>{
+const addRole = async () => {
     const { roleName } = await addRolePrompt();
     await createRole(roleName);
     console.log(`\n Successfully created ${roleName} to the database \n`);
 };
 
 // Add a department
-const addDepartment = async () =>{
+const addDepartment = async () => {
     const { departmentName } = await addDepartmentPrompt();
     await createDepartment(departmentName);
     console.log(`\n Successfully created ${departmentName} to the database \n`);
@@ -110,5 +82,5 @@ module.exports = {
     addDepartment,
     updateEmployeeRoleAction,
     updateEmployeeManagerAction,
-    deleteObjectAction
+    deleteObjectAction,
 };

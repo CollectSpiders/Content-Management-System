@@ -1,19 +1,8 @@
 // Importing the main prompt
-const inquierer = require('inquirer');
-const { mainPrompt } = require('./prompt');
+const { mainPrompt } = require("./prompt");
 
 // Importing the required function calls
-const {
-    viewAllEmployees,
-    viewAllRoles,
-    viewAllDepartments,
-    addEmployee,
-    addRole,
-    addDepartment,
-    updateEmployeeRoleAction,
-    updateEmployeeManagerAction,
-    deleteObjectAction
-} = require('./calls');
+const { viewAllEmployees, viewAllRoles, viewAllDepartments, addEmployee, addRole, addDepartment, updateEmployeeRoleAction, updateEmployeeManagerAction, deleteObjectAction } = require("./calls");
 
 // Mapping each operation to its corresponding handler
 const operationHandlers = {
@@ -25,13 +14,13 @@ const operationHandlers = {
     "Add department": addDepartment,
     "Update employee role": updateEmployeeRoleAction,
     "Update employee manager": updateEmployeeManagerAction,
-    "Delete object": deleteObjectAction
+    "Delete object": deleteObjectAction,
 };
 
 // Displaying the welcome message
 const displayWelcomeMessage = () => {
     console.log(`Welcome to the Employee Tracker!`);
-}
+};
 
 // Running the application
 const runApplication = async () => {

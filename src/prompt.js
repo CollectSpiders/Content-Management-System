@@ -1,24 +1,15 @@
-const { getDepartments, getRoles, getEmployees, getManagers } = require('./operations');
-const inquirer = require('inquirer');
+const { getDepartments, getRoles, getEmployees, getManagers } = require("./operations");
+const inquirer = require("inquirer");
 
 // main menu commands
-const mainPrompt = () =>{
+const mainPrompt = () => {
     return inquirer.prompt([
         {
-            type: 'list',
-            name: 'action',
-            message: 'What would you like to do?',
-            choices: [
-                'View Departments',
-                'View Roles',
-                'View Employees',
-                'View Managers',
-                'Add Department',
-                'Add Role',
-                'Add Employee',
-                'Delete employee, role, or department',
-            ]
-        }
+            type: "list",
+            name: "action",
+            message: "What would you like to do?",
+            choices: ["View Departments", "View Roles", "View Employees", "View Managers", "Add Department", "Add Role", "Add Employee", "Delete employee, role, or department"],
+        },
     ]);
 };
 
@@ -28,136 +19,137 @@ const addEmployeePrompt = async () => {
     const managers = await getManagers();
     return inquirer.prompt([
         {
-            type: 'input',
-            name: 'employeeFirstName',
-            message: 'What is the employee\'s first name?'
+            type: "input",
+            name: "employeeFirstName",
+            message: "What is the employee's first name?",
         },
         {
-            type: 'input',
-            name: 'employeeLastName',
-            message: 'What is the employee\'s last name?'
+            type: "input",
+            name: "employeeLastName",
+            message: "What is the employee's last name?",
         },
         {
-            type: 'list',
-            name: 'employeeRole',
-            message: 'What is the employee\'s role?',
+            type: "list",
+            name: "employeeRole",
+            message: "What is the employee's role?",
             choices: roleChoices,
         },
         {
-            type: 'list',
-            name: 'employeeManager',
-            message: 'Who is the employee\'s manager?',
-            choices: [...managerChoices, { name: 'None', value: null }]
-        }
+            type: "list",
+            name: "employeeManager",
+            message: "Who is the employee's manager?",
+            choices: [...managerChoices, { name: "None", value: null }],
+        },
     ]);
 };
 
-const addRolePrompt = async () =>{
+const addRolePrompt = async () => {
     const departmentChoices = await getDepartments();
     return inquirer.prompt([
         {
-            type: 'input',
-            name: 'roleTitle',
-            message: 'What is the role\'s title?'
+            type: "input",
+            name: "roleTitle",
+            message: "What is the role's title?",
         },
         {
-            type: 'input',
-            name: 'roleSalary',
-            message: 'What is the role\'s salary?'
+            type: "input",
+            name: "roleSalary",
+            message: "What is the role's salary?",
         },
         {
-            type: 'list',
-            name: 'roleDepartment',
-            message: 'What is the role\'s department?',
-            choices: departmentChoices
-        }
+            type: "list",
+            name: "roleDepartment",
+            message: "What is the role's department?",
+            choices: departmentChoices,
+        },
     ]);
 };
 
-const addDepartmentPrompt = () =>{
+const addDepartmentPrompt = () => {
     return inquirer.prompt([
         {
-            type: 'input',
-            name: 'departmentName',
-            message: 'What is the department\'s name?'
-        }
+            type: "input",
+            name: "departmentName",
+            message: "What is the department's name?",
+        },
     ]);
 };
 
-const deleteObjectPrompt = async () =>{
+const deleteObjectPrompt = async () => {
     const departmentChoices = await getDepartments();
     const roleChoices = await getRoles();
     const employeeData = await getEmployees();
-    const employeeChoices = employeeData.map(employee => ({ name: employee.first_name + ' ' + employee.last_name, value: employee.id }));
+    const employeeChoices = employeeData.map((employee) => ({ name: employee.first_name + " " + employee.last_name, value: employee.id }));
     return inquirer.prompt([
         {
-            type: 'list',
-            name: 'objectType',
-            message: 'What type of object would you like to delete?',
+            type: "list",
+            name: "objectType",
+            message: "What type of object would you like to delete?",
             choices: [
-                { name: 'Department', value: 'department' },
-                { name: 'Role', value: 'role' },
-                { name: 'Employee', value: 'employee' }
-            ]
+                { name: "Department", value: "department" },
+                { name: "Role", value: "role" },
+                { name: "Employee", value: "employee" },
+            ],
         },
         {
-            type: 'list',
-            name: 'employeeToDelete',
-            message: 'Which employee would you like to delete?',
+            type: "list",
+            name: "employeeToDelete",
+            message: "Which employee would you like to delete?",
             choices: employeeChoices,
-            when: (answers) => answers.objectType === 'employee'
+            when: (answers) => answers.objectType === "employee",
         },
         {
-            type: 'list',
-            name: 'roleToDelete',
-            message: 'Which role would you like to delete?',
+            type: "list",
+            name: "roleToDelete",
+            message: "Which role would you like to delete?",
             choice: roleChoices,
-            when: (answers) => answers.objectType === 'role'
+            when: (answers) => answers.objectType === "role",
         },
         {
-            type: 'list',
-            name: 'departmentToDelete',
-            message: 'Which department would you like to delete?',
+            type: "list",
+            name: "departmentToDelete",
+            message: "Which department would you like to delete?",
             choices: departmentChoices,
-            when: (answers) => answers.objectType === 'department'
-        }
-])};
-
-const updateEmployeeRolePrompt = async () =>{
-    const employeeChoices = (await getEmployees()).map(employee => ({ name: employee.first_name + ' ' + employee.last_name, value: employee.id }));
-    const roleChoices = await getRoles();
-    return inquirer.prompt([
-        {
-            type: 'list',
-            name: 'employeeToUpdate',
-            message: 'Which employee would you like to update?',
-            choices: employeeChoices
+            when: (answers) => answers.objectType === "department",
         },
-        {
-            type: 'list',
-            name: 'newRole',
-            message: 'Which role would you like to assign to this employee?',
-            choices: roleChoices
-        }
     ]);
 };
 
-const updateEmployeeManagerPrompt = async () =>{
-    const employeeChoices = (await getEmployees()).map(employee => ({ name: employee.first_name + ' ' + employee.last_name, value: employee.id }));
+const updateEmployeeRolePrompt = async () => {
+    const employeeChoices = (await getEmployees()).map((employee) => ({ name: employee.first_name + " " + employee.last_name, value: employee.id }));
+    const roleChoices = await getRoles();
+    return inquirer.prompt([
+        {
+            type: "list",
+            name: "employeeToUpdate",
+            message: "Which employee would you like to update?",
+            choices: employeeChoices,
+        },
+        {
+            type: "list",
+            name: "newRole",
+            message: "Which role would you like to assign to this employee?",
+            choices: roleChoices,
+        },
+    ]);
+};
+
+const updateEmployeeManagerPrompt = async () => {
+    const employeeChoices = (await getEmployees()).map((employee) => ({ name: employee.first_name + " " + employee.last_name, value: employee.id }));
     const managerChoices = await getManagers();
     return inquirer.prompt([
         {
-            type: 'list',
-            name: 'employeeToUpdate',
-            message: 'Which employee would you like to update?',
-            choices: employeeChoices
+            type: "list",
+            name: "employeeToUpdate",
+            message: "Which employee would you like to update?",
+            choices: employeeChoices,
         },
         {
-            type: 'list',
-            name: 'newManager',
-            message: 'Which manager would you like to assign to this employee?',
-            choices: [...managerChoices, { name: 'None', value: null }]
-        }
+            type: "list",
+            name: "newManager",
+            message: "Which manager would you like to assign to this employee?",
+            choices: [...managerChoices, { name: "None", value: null }],
+        },
     ]);
 };
 
@@ -168,5 +160,5 @@ module.exports = {
     addDepartmentPrompt,
     deleteObjectPrompt,
     updateEmployeeRolePrompt,
-    updateEmployeeManagerPrompt
+    updateEmployeeManagerPrompt,
 };
