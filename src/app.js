@@ -1,5 +1,8 @@
+// Importing the main prompt
+const inquierer = require('inquirer');
 const { mainPrompt } = require('./prompt');
 
+// Importing the required function calls
 const {
     viewAllEmployees,
     viewAllRoles,
@@ -12,7 +15,8 @@ const {
     deleteObjectAction
 } = require('./calls');
 
-const operationHandlers ={
+// Mapping each operation to its corresponding handler
+const operationHandlers = {
     "View all employees": viewAllEmployees,
     "View all roles": viewAllRoles,
     "View all departments": viewAllDepartments,
@@ -24,21 +28,23 @@ const operationHandlers ={
     "Delete object": deleteObjectAction
 };
 
+// Displaying the welcome message
 const displayWelcomeMessage = () => {
     console.log(`Welcome to the Employee Tracker!`);
 }
 
-const runApplication = async () =>{
+// Running the application
+const runApplication = async () => {
     displayWelcomeMessage();
     let exit = false;
-    while (!exit){
+    while (!exit) {
         const { action } = await mainPrompt();
-        
-        if (action === "Exit"){
+
+        if (action === "Exit") {
             exit = true;
         } else {
-            const actionHandler = actionHandlers[action];
-            if (actionHandler){
+            const actionHandler = operationHandlers[action];
+            if (actionHandler) {
                 await actionHandler();
             } else {
                 console.log(`Invalid action: ${action}`);

@@ -1,5 +1,5 @@
 const { getDepartments, getRoles, getEmployees, getManagers } = require('./operations');
-const inquirer = require('inquierer');
+const inquirer = require('inquirer');
 
 // main menu commands
 const mainPrompt = () =>{

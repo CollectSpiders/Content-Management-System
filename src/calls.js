@@ -34,6 +34,12 @@ const viewAllRoles = async () => {
     console.table(roles);
 };
 
+// View all Managers
+const viewAllManagers = async () =>{
+    const managers = await getManagers();
+    console.table(managers);
+};
+
 // View all departments
 const viewAllDepartments = async () => {
     const departments = await getDepartments();
@@ -97,6 +103,7 @@ const deleteObjectAction = async () => {
 module.exports = {
     viewAllEmployees,
     viewAllRoles,
+    viewAllManagers,
     viewAllDepartments,
     addEmployee,
     addRole,
